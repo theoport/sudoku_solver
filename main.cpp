@@ -36,14 +36,14 @@ int main() {
 
   load_board("easy.dat", board);
 
-  // Should be OK
-  cout << "Putting '1' into I8 is ";
-  if (!make_move("I8", '1', board)) 
+  //Should be OK
+  /*cout << "Putting '1' into I8 is ";
+  if (!make_move("I8", '1', board, count)) 
     cout << "NOT ";
   cout << "a valid move. The board is:" << endl;
   display_board(board);
 
-	// write more tests
+	// write more tests*/
 
   cout << "====================== Question 3 ======================" << endl << endl;
 
@@ -57,12 +57,13 @@ int main() {
   cout << "====================== Question 4 ======================" << endl << endl;
 
   load_board("easy.dat", board);
-  if (solve_board(board)) {
+  if(solve_board(board)){
     cout << "The 'easy' board has a solution:" << endl;
     display_board(board);
-  } else 
-    cout << "A solution cannot be found." << endl;
-  cout << endl;
+ 		}
+	 else 
+		 cout << "A solution cannot be found." << endl;	
+		 cout << endl;
 
   load_board("medium.dat", board);
   if (solve_board(board)) {
@@ -72,6 +73,30 @@ int main() {
     cout << "A solution cannot be found." << endl;
   cout << endl;
 
+  load_board("mystery1.dat", board);
+  if (solve_board(board)) {
+    cout << "The 'mystery1' board has a solution:" << endl;
+    display_board(board);
+  } else 
+    cout << "A solution cannot be found." << endl;
+  cout << endl;
+	
+  load_board("mystery2.dat", board);
+  if (solve_board(board)) {
+    cout << "The 'mystery2' board has a solution:" << endl;
+    display_board(board);
+  } else 
+    cout << "A solution cannot be found." << endl;
+  cout << endl;
+
+  load_board("mystery3.dat", board);
+  if (solve_board(board)) {
+    cout << "The 'mystery3' board has a solution:" << endl;
+    display_board(board);
+  } else 
+    cout << "A solution cannot be found." << endl;
+  cout << endl;
+	
 	// write more tests
 
   cout << "====================== Question 5 ======================" << endl << endl;
@@ -80,3 +105,4 @@ int main() {
 
   return 0;
 }
+
