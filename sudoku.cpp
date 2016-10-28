@@ -86,24 +86,26 @@ bool make_move(const char position[2], char digit, char board[9][9]){
 	int column_index=position[1]-49;
 	int sub_square_column_index=3*(column_index/3);	
 	int sub_square_row_index=3*(row_index/3);
-	if (row_index>8||row_index<0)
+	if (row_index>8||row_index<0) //check for legal position
 		return false;
 	if (column_index>8||column_index<0)
 		return false;
-	if (board[row_index][column_index]!='.')
+	if (digit<1&&digit>9)	//check for legal digit
 		return false;
-	for(int n=0;n<9;n++){
+	if (board[row_index][column_index]!='.') // check if position is free
+		return false;
+	for(int n=0;n<9;n++){ //check for matching digit in corresponding row & column
 		if(board[row_index][n]==digit||board[n][column_index]==digit)	
 			return false;
 	}
-	for (int n=0; n<3;n++){
+	for (int n=0; n<3;n++){	//check for matching digit in corresponding 3x3 sub-square
 		for(int m=0; m<3;m++){
 			if(board[sub_square_row_index+n][sub_square_column_index+m]==digit)
 				return false;
 		}
 	}
-	board[row_index][column_index]=digit;	
-	return true;
+	board[row_index][column_index]=digit; //places digit into position after all previous conditions 
+	return true;													//have been checked
 }
 
 bool save_board(const char filename[], char board[9][9]){
@@ -131,34 +133,33 @@ bool solve_board(char board [9][9]){
 	int count=0;
 	recursive_solve(board,n,m,count);
 	if(is_complete(board)){
-		cout<<count<<" attempts to make a move.\n";
+		cout<<"After "<<count<<" calls to the recursive function, ";
 		return true;
 	}
 	else 
 		return false;
-	
 } 
 		
 void recursive_solve(char board[9][9], int row, int column, int& count){
-	if(column>8){
+	if(column>8){ //proceeds to next row when end of current row is reached
 		row++;
 		column=0;
 	}
-	count++;
+	count++; //counts the amount of times the recursive function is called
 	char position[2];
 	position[0]=row+65;
 	position[1]=column+49;
-	if (isdigit(board[row][column])){
+	if (isdigit(board[row][column])){	//jumps to next blank square if this position is occupied
 		recursive_solve(board, row, column+1,count);
 		return;		
 	}
-	for(int n='1';n<='9';n++){
-		if(make_move(position,n,board)){
-			recursive_solve(board,row,column+1,count);
+	for(int n='1';n<='9';n++){	//tries numbers 1-9 in given square 
+		if(make_move(position,n,board)){	//until one is legal(not necessarily correct yet)
+			recursive_solve(board,row,column+1,count);	//proceeds to next position
 			if(!(is_complete(board)))
-				board[row][column]='.';
-		}
-	}
+				board[row][column]='.'; // resets position to '.' after each iteration of the for-loop
+		}														// since otherwise the make_move function will permanently place
+	}															// the first (possibly incorrect) legal number in given position.
 	return;
 }
 

@@ -1,1 +1,53 @@
 Summarise your findings here (see specification).
+
+The easiest possible sudoku is one where each empty square has only one legal digit that 
+can be placed in it. This means that one possible way of evaluating the difficulty of a
+sudoku is to count the number of times the computer places a legal number in a square.
+To count this, a counter variable can be placed at the beginning of the recursive function,
+which is called every time a digit was legally placed in the preceding square.
+
+This variable will increment by one every time the recursive function is called, which would result 
+in the number 81 if the first legal move in each square happened to also be the correct one. 
+
+As soon as the program finds a square [x] in which no legal move is possible, it moves to the
+previous square[x-1], finds the next legal number in it and then moves again to square[x] by calling 
+the recursive function. If this only happened once in a sudoku, the counter would evaluate to 82, as 
+the recursive function was called only once for square [x-1] (because it stays in the for loop in the
+same recursive function), twice for square[x] and once for all remaining squares.  
+If of course square[x-1] has reached its highest legal number, the program will have to move to 
+square[x-2], and if this happens once in a sudoku the counter will evaluate to 83. Essentially,
+this means that the counter will count the amount of times the program places a legal digit in a 
+square, which is representative of the dififculty level, as a higher number means there exist
+more possible combinations of legal numbers and the correct one is more difficult to find.
+
+Of course, it could happen that a very difficult sudoku with many possible combinations of numbers
+has the first combination as a solution and the counter will evaluate to a very low number (81).  
+Furthermore, if the computer starts its make_move attempts by placing a '9' first and then 
+moving down (instead of a '1' first and then moving up), the counter actually evaluates to completely
+different numbers. This can be explained by imagining all possible legal digit-combinations of 
+the sudoku lying on a "number-tree". The longest (and correct) branch will of course be 81 
+digit-points long, and the other branches will be shorter and varying in length. When starting 
+by placing a '9' the counter counts the succesfull make_move attempts 'above' the correct 
+branch, and when starting by placing a '1', the counter counts the succesull make_move attempts
+'below' the correct branch.  
+Program A (the one that starts by placing a '1'), calls the recursive function ~550000 times for 
+Mystery1 and ~21000 times for Mystery3. But Program B (the one that starts by placing a '9'), calls
+the recursive function ~20700 times for Mystery1 and ~24700 times for Mystery3.
+Something similar happens when the counter is placed in the make_move function 
+(i.e. it literally counts the attempts of making a move, regarldess of whether it's legal). 
+
+Now the question is of course, on what basis shall we judge the difficulty of the sudoku?
+Either we do it for a computer program (Program A or Program B) or for a human.
+For the computer program, the answer is easy. For Program A, Mystery1 is more difficult than Mystery3. 
+For Program B, both are equally as difficult.
+So far, we have only looked at the number of legal moves BEFORE the program reached the correct answer.
+If we want to look at the difficulty level for a human, it would make sense to look at the total number
+of legal moves BEFORE and AFTER the correct answer branch. 
+This number can be found by adding the counter value of Program A to the counter value of Program B. 
+Hence, there are ~570000 legal moves for Mystery1 and ~46000 legal moves for Mystery3. 
+This is under the condition that moves are placed in the top left square first and then moving to
+the right. The program is not very efficient and a human could solve a Sudoku in a much cleverer way, 
+but the total number of possible legal moves should be fairly representative of the 
+difficulty level of a Sudoku. 
+Hence, Mystery1 is the more difficult Sudoku, Mystery2 is unsolveable and Mystery3 is the less
+difficult sudoku.
