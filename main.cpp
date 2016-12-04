@@ -131,6 +131,13 @@ int main() {
     cout << "A solution cannot be found." << endl;
   cout << endl;
 	
+  load_board("temp.txt", board);
+  if (solve_board(board)) {
+    cout << "the 'temp' board has a solution:" << endl;
+    display_board(board);
+  } else 
+    cout << "A solution cannot be found." << endl;
+  cout << endl;
 
 
   cout << "====================== Question 5 ======================" << endl << endl;
